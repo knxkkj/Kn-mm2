@@ -21,7 +21,7 @@ local function cleanupExistingUI()
 	local CoreGui = game:GetService("CoreGui")
 	local children = CoreGui:GetChildren()
 	for i, v in ipairs(children) do
-		if v.Name:match("^Onyx.+Button$") then
+		if v.Name:match("^knmm2.+Button$") then
 			pcall(function() v:Destroy() end)
 		end
 	end
@@ -288,8 +288,6 @@ task.spawn(function()
 			Title = "knmm2 - Premium",
 			Acrylic = false,
 			Author = "Murder Mystery 2",
-			Background = "https://raw.githubusercontent.com/onyx-scripts/main/main/onyxscripts.png",
-			BackgroundImageTransparency = 0.35,
 			Folder = "knmm2",
 			HideSearchBar = false,
 			Icon = "solar:planet-bold",
@@ -318,12 +316,6 @@ task.spawn(function()
 	debugPrint("Window created successfully")
 
 	_G.knmm2 = Window
-
-	pcall(function()
-		Window:Tag({ Title = "@knmm2", Color = Color3.fromHex("#ffffff"), Icon = "youtube", Radius = 6 })
-		Window:Tag({ Title = "", Color = Color3.fromHex("#ffffff"), Icon = "message-square-more", Radius = 6 })
-		Window:Tag({ Title = "Mobile & PC", Color = Color3.fromHex("#ffffff"), Icon = "smartphone", Radius = 6 })
-	end)
 
 	Window:SetBackgroundTransparency(0.4)
 
@@ -416,7 +408,7 @@ task.spawn(function()
 			IconShape = "Square"
 		})
 
-		-- ADD CONTENT
+		-- ADD CONTENT TO VISUALS TAB
 		Tab3:Section({ Title = "Sound Changer" })
 		Tab3:Toggle({
 			Title = "Error Sound",
@@ -445,7 +437,17 @@ task.spawn(function()
 			Callback = function(state, arg17)
 			end
 		})
+		Tab3:Toggle({
+			Title = "Toggle Sound",
+			Desc = "A click when you flip a switch in the menu.",
+			Flag = "Toggle_Sound_Switches",
+			Type = "Toggle",
+			Value = true,
+			Callback = function(state, arg19)
+			end
+		})
 
+		-- ADD CONTENT TO ESP TAB
 		Tab:Section({ Title = "ESP — See Through Walls" })
 		Tab:Toggle({
 			Title = "ESP Outline",
@@ -456,7 +458,163 @@ task.spawn(function()
 			Callback = function(arg22, arg23)
 			end
 		})
+		Tab:Toggle({
+			Title = "Full Body ESP",
+			Desc = "Fills the whole body in the role colour.",
+			Flag = "Toggle_Full_Body_ESP",
+			Type = "Toggle",
+			Value = false,
+			Callback = function(arg24, arg25)
+			end
+		})
+		Tab:Toggle({
+			Title = "Display Name ESP",
+			Desc = "Their display name above their head, in the role colour.",
+			Flag = "Toggle_Display_Name_ESP",
+			Type = "Toggle",
+			Value = false,
+			Callback = function(arg26, arg27)
+			end
+		})
+		Tab:Toggle({
+			Title = "Dropped Gun ESP",
+			Desc = "Shows the gun on the floor after the sheriff dies.",
+			Flag = "Toggle_Dropped_Gun_ESP",
+			Type = "Toggle",
+			Value = false,
+			Callback = function(state, arg29)
+			end
+		})
+		Tab:Toggle({
+			Title = "Trap ESP",
+			Desc = "Shows traps other players hid around the map.",
+			Flag = "Toggle_Trap_ESP",
+			Type = "Toggle",
+			Value = false,
+			Callback = function(state, arg31)
+			end
+		})
 
+		Tab:Section({ Title = "Tracers & Distance" })
+		Tab:Toggle({
+			Title = "Tracers",
+			Desc = "Draws a line from the bottom of your screen to every player, in their role colour.",
+			Flag = "Toggle_ESP_Tracers",
+			Type = "Toggle",
+			Value = false,
+			Callback = function(state, arg33)
+			end
+		})
+		Tab:Toggle({
+			Title = "Distance",
+			Desc = "How many studs away each player is, written under their feet.",
+			Flag = "Toggle_ESP_Distance",
+			Type = "Toggle",
+			Value = false,
+			Callback = function(state, arg35)
+			end
+		})
+		Tab:Toggle({
+			Title = "Off-Screen Arrows",
+			Desc = "Arrows around your crosshair pointing at the players you cannot see - including the ones behind you.",
+			Flag = "Toggle_ESP_Arrows",
+			Type = "Toggle",
+			Value = false,
+			Callback = function(state, arg37)
+			end
+		})
+
+		Tab:Section({ Title = "ESP Colours" })
+		Tab:Colorpicker({
+			Title = "Innocent",
+			Desc = "Outline colour for everyone else",
+			Default = Color3.fromRGB(0, 255, 8),
+			Flag = "Colorpicker_Innocent",
+			Callback = function(arg38, arg39)
+			end
+		})
+		Tab:Colorpicker({
+			Title = "Sheriff",
+			Desc = "Outline colour for the sheriff",
+			Default = Color3.fromRGB(0, 153, 255),
+			Flag = "Colorpicker_Sheriff",
+			Callback = function(arg40, arg41)
+			end
+		})
+		Tab:Colorpicker({
+			Title = "Murderer",
+			Desc = "Outline colour for the murderer",
+			Default = Color3.fromRGB(255, 0, 4),
+			Flag = "Colorpicker_Murderer",
+			Callback = function(arg42, arg43)
+			end
+		})
+		Tab:Colorpicker({
+			Title = "Dropped Gun",
+			Desc = "Highlight colour for the dropped gun",
+			Default = Color3.fromRGB(0, 153, 255),
+			Flag = "Colorpicker_Dropped_Gun_Blue",
+			Callback = function(state, arg45)
+			end
+		})
+		Tab:Colorpicker({
+			Title = "Traps",
+			Desc = "Highlight colour for traps",
+			Default = Color3.fromHex("#A855F7"),
+			Flag = "Colorpicker_Traps",
+			Callback = function(state, arg47)
+			end
+		})
+
+		-- ADD CONTENT TO FLING & TELEPORT TAB
+		Tab2:Section({ Title = "Quick Actions" })
+		Tab2:Button({
+			Title = "Fling Murderer",
+			Desc = "Yeet whoever has the knife",
+			Icon = "lucide:flame",
+			Callback = function(state, arg49)
+			end
+		})
+		Tab2:Button({
+			Title = "Fling Sheriff",
+			Desc = "Yeet whoever has the gun",
+			Icon = "lucide:flame",
+			Callback = function(state, arg51)
+			end
+		})
+		Tab2:Button({
+			Title = "Fling All",
+			Desc = "Yeet everyone in the server, one after another. Press again to stop",
+			Icon = "lucide:flame",
+			Callback = function(state, arg53)
+			end
+		})
+		Tab2:Button({
+			Title = "Teleport to Murderer",
+			Desc = "Instantly go to whoever has the knife",
+			Icon = "lucide:crosshair",
+			Callback = function(state, arg55)
+			end
+		})
+		Tab2:Button({
+			Title = "Teleport to Sheriff",
+			Desc = "Instantly go to whoever has the gun",
+			Icon = "lucide:shield",
+			Callback = function(state, arg57)
+			end
+		})
+
+		Tab2:Section({ Title = "Target Player" })
+		Tab2:Dropdown({
+			Title = "Target",
+			Desc = "Pick a player for the buttons below",
+			Multi = false,
+			Values = {},
+			Callback = function(state, arg59)
+			end
+		})
+
+		-- CONFIG MANAGER
 		local ConfigSuccess, Config = pcall(function()
 			return Window.ConfigManager:CreateConfig("autosave")
 		end)
